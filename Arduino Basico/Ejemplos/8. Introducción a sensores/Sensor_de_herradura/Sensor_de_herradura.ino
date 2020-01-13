@@ -1,5 +1,5 @@
-int herradura = 4;
-int led = 3;
+int herradura = 8;
+int led = 9;
 
 void setup() {
   pinMode(herradura,INPUT);
