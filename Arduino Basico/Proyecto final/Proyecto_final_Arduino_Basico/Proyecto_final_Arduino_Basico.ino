@@ -28,7 +28,7 @@ int boton4 = 17;
 // Contadores
 int i;
 
-// Variable que almacenará el némero que se desplegará en el display
+// Variable que almacenará el número que se desplegará en el display
 int numero = 0;
 
 // Variables para el estado de cada botón
@@ -147,10 +147,107 @@ void moneda(){
     delay(100);
     digitalWrite(buzzer,LOW);
     display(numero);
-    delay(1000);
+    delay(500);
   }
 }
 
+void verificar(){
+  // Producto 1 = $1
+  if(numero >= 1){
+    digitalWrite(led1,HIGH);
+  }
+  if(estadoBoton1 == 0 && numero < 1){
+    digitalWrite(buzzer,HIGH);
+    delay(100);
+    digitalWrite(buzzer,LOW);
+    delay(100);
+    digitalWrite(buzzer,HIGH);
+    delay(100);
+    digitalWrite(buzzer,LOW);
+  }
+  if(estadoBoton1 == 0 && numero >= 1){
+    digitalWrite(led2,LOW);
+    digitalWrite(led3,LOW);
+    digitalWrite(led4,LOW);
+    digitalWrite(buzzer,HIGH);
+    delay(1000);
+    digitalWrite(buzzer,LOW);
+    digitalWrite(led1,LOW);
+    numero = 0;
+  }
+
+  // Producto 2 = $3
+  if(numero >= 3){
+    digitalWrite(led2,HIGH);
+  }
+  if(estadoBoton2 == 0 && numero < 3){
+    digitalWrite(buzzer,HIGH);
+    delay(100);
+    digitalWrite(buzzer,LOW);
+    delay(100);
+    digitalWrite(buzzer,HIGH);
+    delay(100);
+    digitalWrite(buzzer,LOW);
+  }
+  if(estadoBoton2 == 0 && numero >= 3){
+    digitalWrite(led1,LOW);
+    digitalWrite(led3,LOW);
+    digitalWrite(led4,LOW);
+    digitalWrite(buzzer,HIGH);
+    delay(1000);
+    digitalWrite(buzzer,LOW);
+    digitalWrite(led2,LOW);
+    numero = 0;
+  }
+
+  // Producto 3 = $5
+  if(numero >= 5){
+    digitalWrite(led3,HIGH);
+  }
+  if(estadoBoton3 == 0 && numero < 5){
+    digitalWrite(buzzer,HIGH);
+    delay(100);
+    digitalWrite(buzzer,LOW);
+    delay(100);
+    digitalWrite(buzzer,HIGH);
+    delay(100);
+    digitalWrite(buzzer,LOW);
+  }
+  if(estadoBoton3 == 0 && numero >= 5){
+    digitalWrite(led1,LOW);
+    digitalWrite(led2,LOW);
+    digitalWrite(led4,LOW);
+    digitalWrite(buzzer,HIGH);
+    delay(1000);
+    digitalWrite(buzzer,LOW);
+    digitalWrite(led3,LOW);
+    numero = 0;
+  }
+
+  // Producto 4 = $8
+  if(numero >= 8){
+    digitalWrite(led4,HIGH);
+  }
+  if(estadoBoton4 == 0 && numero < 8){
+    digitalWrite(buzzer,HIGH);
+    delay(100);
+    digitalWrite(buzzer,LOW);
+    delay(100);
+    digitalWrite(buzzer,HIGH);
+    delay(100);
+    digitalWrite(buzzer,LOW);
+  }
+  if(estadoBoton4 == 0 && numero >= 8){
+    digitalWrite(led1,LOW);
+    digitalWrite(led2,LOW);
+    digitalWrite(led3,LOW);
+    digitalWrite(buzzer,HIGH);
+    delay(1000);
+    digitalWrite(buzzer,LOW);
+    digitalWrite(led4,LOW);
+    numero = 0;
+  }
+}
 
 void setup() {
   // Declaración de tipo de pines
@@ -173,52 +270,12 @@ void setup() {
 }
 
 void loop() {
-  
-  /*estadoBoton1 = digitalRead(boton1); 
+  estadoBoton1 = digitalRead(boton1); 
   estadoBoton2 = digitalRead(boton2); 
   estadoBoton3 = digitalRead(boton3); 
-  estadoBoton4 = digitalRead(boton4);*/
-
+  estadoBoton4 = digitalRead(boton4);
+  
   display(numero);  // Se muestra el 0 en el display al iniciar
   moneda();
-  
-  /*if(estadoBoton1 == 0)
-  {
-    digitalWrite(led1,HIGH);
-    delay(1000);
-    digitalWrite(led1,LOW);
-  }
-  if(estadoBoton2 == 0)
-  {
-    digitalWrite(led2,HIGH);
-    delay(1000);
-    digitalWrite(led2,LOW);
-  }
-  if(estadoBoton3 == 0)
-  {
-    digitalWrite(led3,HIGH);
-    delay(1000);
-    digitalWrite(led3,LOW);
-  }
-  if(estadoBoton4 == 0)
-  {
-    digitalWrite(led4,HIGH);
-    delay(1000);
-    digitalWrite(led4,LOW);
-  }*/
-
-  // Buzzer
-  /*digitalWrite(buzzer,HIGH);
-  delay(100);
-  digitalWrite(buzzer,LOW);
-  delay(100);*/
-  
-  // Display
-  
-  /*for(i=0;i<10;i++)
-  {
-    display(i);
-    delay(200); 
-  }*/
-
+  verificar();
 }
