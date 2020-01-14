@@ -1,3 +1,11 @@
+/*
+  Realizado por: Hernández Juárez Carlos
+
+  Proyecto final de Arduino Básico: Máquina expendedora
+
+  13 de enero de 2019
+*/
+
 // Pin del sensor de herradura
 int herradura = 8;
 
@@ -10,7 +18,7 @@ int e = 5;
 int f = 6;
 int g = 7;
 
-// Pi para el buzzer
+// Pin para el buzzer
 int buzzer = 16; 
 
 // Pines de los LEDs
@@ -135,14 +143,15 @@ void display(int num)
   }
 }
 
-void moneda(){
+void moneda(){  // Función para el proceso de insertar una moneda a la máquina
   if(digitalRead(herradura) == LOW)
   {
-    numero = numero + 1;
-    if(numero > 9)
+    numero = numero + 1;  // Aumenta el contador si se ha insertado una moneda
+    if(numero > 9)  // Condición para asegurar que el número máximo de monedas que se pueden ingresar es 9
     {
       numero = 9;
     }
+    // Sonido para confirmar que se introdujo la moneda 
     digitalWrite(buzzer,HIGH);
     delay(100);
     digitalWrite(buzzer,LOW);
@@ -151,6 +160,7 @@ void moneda(){
   }
 }
 
+// Función que verifica, para cada uno de los productos, si el número de monedas introducidas es suficiente para comprarlo
 void verificar(){
   // Producto 1 = $1
   if(numero >= 1){
@@ -270,12 +280,13 @@ void setup() {
 }
 
 void loop() {
+  // Se leen y guardan los estados de los botones
   estadoBoton1 = digitalRead(boton1); 
   estadoBoton2 = digitalRead(boton2); 
   estadoBoton3 = digitalRead(boton3); 
   estadoBoton4 = digitalRead(boton4);
   
   display(numero);  // Se muestra el 0 en el display al iniciar
-  moneda();
-  verificar();
+  moneda();  // Se manda llamar a la función moneda
+  verificar();  // SE llama a la función verificar
 }
