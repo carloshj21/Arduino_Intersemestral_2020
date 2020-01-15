@@ -2,9 +2,9 @@
 #include <Keypad.h>
 
 char tecla;
-int numero;
-int numero1 = NULL;
-int numero2 = NULL;
+float numero;
+float numero1 = NULL;
+float numero2 = NULL;
 char operador = NULL;
 
 const byte filas = 4;
@@ -23,13 +23,30 @@ byte pinesColumnas[columnas] = {7,6,5,4};
 
 Keypad miTeclado = Keypad(makeKeymap(teclado),pinesFilas,pinesColumnas,filas,columnas);
 
-int operacion(int num1, int num2, char op){
-  int resultado;
-  switch(op){
+void operacion(float num1, float num2, char op){
+  float resultado;
+  switch(op)
+  {
     case '+':
       resultado = num1 + num2;
+      Serial.println(resultado,0);
     break;
-    return resultado; 
+    case '-':
+      resultado = num1 - num2;
+      Serial.println(resultado,0);
+    break;
+    case '*':
+      resultado = num1 * num2;
+      Serial.println(resultado,0);
+    break;
+    case '/':
+      if(num2 == 0){
+        Serial.println("Error: no se puede dividir entre cero");
+      }else{
+        resultado = num1 / num2;
+        Serial.println(resultado,2);
+      }
+    break;
   }
 }
 
@@ -42,24 +59,33 @@ void loop() {
   if(tecla != NO_KEY)
   {
     if(numero1 != NULL && numero2 == NULL && operador != NULL){
-      numero = String(tecla).toInt();
+      numero = String(tecla).toFloat();
       numero2 = numero;
-      Serial.print("Número 2: ");
-      Serial.println(numero2);
+      //Serial.print("Número 2: ");
+      Serial.print(numero2,0);
     }
     if(numero1 != NULL && numero2 == NULL && operador == NULL){
       operador = tecla;
-      Serial.print("Operador: ");
-      Serial.println(operador);
+      //Serial.print("Operador: ");
+      Serial.print(operador);
     }
     if(numero1 == NULL && numero2 == NULL && operador == NULL){
-      numero = String(tecla).toInt();
+      numero = String(tecla).toFloat();
       numero1 = numero;
-      Serial.print("Número 1: ");
-      Serial.println(numero1);
+      //Serial.print("Número 1: ");
+      Serial.print(numero1,0);
     }
     if(tecla == '='){
-      Serial.println(operacion(numero1,numero2,operador));
+      Serial.print("=");
+      operacion(numero1,numero2,operador);
+      delay(1000);
+      Serial.println("Presione * en el teclado para realizar otra operación");
+    }
+    if(tecla == 'C'){
+      Serial.println("-------------------------------------------------------- ");
+      numero1 = NULL;
+      numero2 = NULL;
+      operador = NULL;
     }
   }
 }
