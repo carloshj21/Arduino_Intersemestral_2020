@@ -4,6 +4,7 @@
 int contador = 0;
 
 long distancia;
+long tiempo;
 
 void setup() {
   Serial.begin(9600);
@@ -13,8 +14,6 @@ void setup() {
 }
 
 void loop() {
-  
-  long tiempo;
 
   // Para activar el sensor
   digitalWrite(trig,LOW);
@@ -28,16 +27,20 @@ void loop() {
   tiempo = pulseIn(echo,HIGH);  // Para recibir la información del sensor
   tiempo = tiempo/2;
   distancia = tiempo/29.2;
+  Serial.print("Distancia: ");
   Serial.print(distancia);
   Serial.println(" cm");
-  delay(500);
-}
+  Serial.print("Contador: ");
+  Serial.println(contador);
 
-void modContador(){
   if(distancia <= 30){
     contador = contador + 1;
   }else{
     contador = contador - 1;
   }
-  Serial.println(contador);
+  delay(500);
+}
+
+void modContador(){
+   //contador ++;
 }
