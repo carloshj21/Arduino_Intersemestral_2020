@@ -5,16 +5,15 @@
 #include "Arduino.h"
 
 class notas{
-	
+
 	public:
-	// Pin para saber donde se encuentra el buzzer
+	//pin donde se encuentra buzzer
 	byte pin;
 
-	// Método para 'tocar' una nota a través del teclado matricial
+	notas(byte _pin);
 	void tocarNota(char nota);
-
-}
-
+	
+};
 
 
 #endif
