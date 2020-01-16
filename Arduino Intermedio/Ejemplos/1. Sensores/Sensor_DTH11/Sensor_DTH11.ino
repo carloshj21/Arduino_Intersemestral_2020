@@ -1,3 +1,4 @@
+
 #include <DHT.h> // Incluimos biblioteca
 #include <DHT_U.h>
 
@@ -29,4 +30,3 @@ void loop(){
     Serial.println(" Farenheit");
   }
 }
-
