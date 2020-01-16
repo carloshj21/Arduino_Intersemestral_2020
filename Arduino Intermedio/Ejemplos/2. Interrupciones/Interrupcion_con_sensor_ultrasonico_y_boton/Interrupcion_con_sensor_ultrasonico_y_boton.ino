@@ -11,6 +11,7 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(3),modContador,FALLING);  // Para hacer la interrupción
   pinMode(trig,OUTPUT);
   pinMode(echo,INPUT);
+  pinMode(3,INPUT_PULLUP);
 }
 
 void loop() {
@@ -33,14 +34,14 @@ void loop() {
   Serial.print("Contador: ");
   Serial.println(contador);
 
-  if(distancia <= 30){
+  /*if(distancia <= 30){
     contador = contador + 1;
   }else{
     contador = contador - 1;
-  }
+  }*/
   delay(500);
 }
 
 void modContador(){
-   //contador ++;
+   contador ++;
 }
