@@ -1,3 +1,11 @@
+/*
+    Realizado por: Hernández Juárez Carlos
+    Tarea 2: Calculadora con teclado matricial
+
+    Arduino Intermedio
+
+*/
+
 // Librería para poder utilizar el teclado matricial
 #include <Key.h>
 #include <Keypad.h>
