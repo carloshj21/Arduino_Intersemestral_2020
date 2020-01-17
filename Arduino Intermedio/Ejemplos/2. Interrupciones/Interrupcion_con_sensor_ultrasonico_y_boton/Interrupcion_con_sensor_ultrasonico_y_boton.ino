@@ -28,20 +28,19 @@ void loop() {
   tiempo = pulseIn(echo,HIGH);  // Para recibir la información del sensor
   tiempo = tiempo/2;
   distancia = tiempo/29.2;
-  Serial.print("Distancia: ");
+  Serial.print("\nDistancia: ");
   Serial.print(distancia);
   Serial.println(" cm");
   Serial.print("Contador: ");
   Serial.println(contador);
 
-  /*if(distancia <= 30){
-    contador = contador + 1;
-  }else{
-    contador = contador - 1;
-  }*/
   delay(500);
 }
 
 void modContador(){
-   contador ++;
+  if(distancia <= 30){
+    contador = contador + 1;
+  }else{
+    contador = contador - 1;
+  }
 }
