@@ -23,6 +23,6 @@ void loop() {
       miLCD.clear();
       contador = 0;
     }
-    miLCD.write(caracter);
+    miLCD.print(caracter);
   }
 }
