@@ -55,7 +55,7 @@ void setup() {
   miLCD.write(byte(1));
   miLCD.setCursor(15,0);
   miLCD.write(byte(2));
-  miLCD.setCursor(10,1);
+  miLCD.setCursor(11,1);
   miLCD.write(byte(3));
 }
 
