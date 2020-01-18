@@ -36,6 +36,9 @@ byte carita[8] = {
   B00000
 };
 
+// Manera rápida
+byte bomba[8]={0,6,4,14,31,31,31,14};
+
 void setup() {
   miLCD.begin(16,2);
 
@@ -43,6 +46,7 @@ void setup() {
   miLCD.createChar(0,fantasma);
   miLCD.createChar(1,rock);
   miLCD.createChar(2,carita);
+  miLCD.createChar(3,bomba);
   
   // Imopresión de los caracteres
   miLCD.setCursor(7,0);
@@ -51,6 +55,8 @@ void setup() {
   miLCD.write(byte(1));
   miLCD.setCursor(15,0);
   miLCD.write(byte(2));
+  miLCD.setCursor(10,1);
+  miLCD.write(byte(3));
 }
 
 void loop() {
