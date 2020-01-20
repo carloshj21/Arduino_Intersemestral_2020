@@ -14,6 +14,10 @@ void draw(){
     fill(200);
     arduino.write('h');
   }
+  else{
+    fill(0);
+    arduino.write('l');
+  }
   
   rect(150,150,100,100);
 }
