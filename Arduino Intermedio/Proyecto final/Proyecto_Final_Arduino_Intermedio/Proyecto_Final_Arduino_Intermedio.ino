@@ -63,42 +63,42 @@ byte contrasenas[2];
 byte contrasena_Usu1;
 byte contrasena_Usu2;
 
-int colLCD = 6;
-
 // -------------------------------------------------   Función para abrir la puerta   ------------------------------------
 void abrirPuerta(){
+  int colLCD = 6;
+  Serial.print("colLCD: ");
+  Serial.println(colLCD);
   miLCD.clear();
   miLCD.print("Introducir cont.");
-  /*tecla = miTeclado.getKey();
-  
-    while(tecla != 'E'  && tecla != NO_KEY){
+  Serial.println("Introduzca su contraseña: ");
+  while(tecla != 'E'){
+    tecla = miTeclado.getKey();
+    if(tecla != NO_KEY)
+    {
+      colLCD = colLCD + 1;
       clave[indice] = tecla;
-       indice++;
-       Serial.print(tecla);
-       miLCD.setCursor(colLCD,1);
-       miLCD.print('*');
-       colLCD++;
+      indice++;
+      Serial.print(tecla);
+      Serial.print('*');
+      Serial.print("colLCD: ");
+      Serial.println(colLCD);
+      miLCD.setCursor(colLCD,1);
+      miLCD.print("*");
     }
+    //Serial.println("No enter");
+  }
+  if(tecla == 'E'){
     String claveIntro = String(clave);
     int claveCadena = String(claveIntro).toInt();
-    if(indice == 3){
-      if(claveCadena == contrasena_Usu1 || claveCadena == contrasena_Usu2){
-        Serial.println(" Correcta");
-        puerta.write(0);
-        delay(2000);
-        miLCD.clear();
-        colLCD = 6;
-      }
-      else{
-        Serial.println(" Incorrecta");
-        puerta.write(45);
-        delay(2000);
-        miLCD.clear();
-        colLCD = 6;
-      }
-      indice = 0;
-   }*/
-   delay(5000);
+    if(claveCadena == contrasena_Usu1 || claveCadena == contrasena_Usu2){
+      Serial.println(" Correcta");
+      puerta.write(0);
+    }
+    else{
+      Serial.println(" Incorrecta");
+      puerta.write(90);
+    }
+  }
 }
 
 void menuInicial(char opcion){
@@ -144,5 +144,5 @@ void setup() {
 }
 
 void loop() {
-  //inicializacion();
+  inicializacion();
 }

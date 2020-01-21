@@ -24,7 +24,7 @@ char teclado [filas][columnas] ={
   {'1','2','3','A'},
   {'4','5','6','B'},
   {'7','8','9','C'},
-  {'*','0','#','D'}
+  {'*','0','E','D'}
 };
 
 byte pinesFilas[filas] = {13,12,11,10};
@@ -49,10 +49,42 @@ void setup() {
 
   contrasena_Usu1 = contrasenas[0];
   contrasena_Usu2 = contrasenas[1];
+
+  Serial.println("A - Abrir puerta");
+  Serial.println("C - Cambiar contraseña");
 }
 
 void loop() {
+  
   tecla = miTeclado.getKey();
+  if(tecla != NO_KEY)
+  {
+    if(tecla == 'A'){
+      Serial.println("Introduzca su contraseña: ");
+      while(tecla != 'E'){
+        tecla = miTeclado.getKey();
+        if(tecla != NO_KEY)
+        {
+          clave[indice] = tecla;
+          indice++;
+          Serial.print(tecla);
+          Serial.print('*');
+        }
+        //Serial.println("No enter");
+      }
+      if(tecla == 'E'){
+        String claveIntro = String(clave);
+        int claveCadena = String(claveIntro).toInt();
+        if(claveCadena == contrasena_Usu1 || claveCadena == contrasena_Usu2){
+          Serial.println(" Correcta");
+        }
+        else{
+          Serial.println(" Incorrecta");
+        }
+      }
+    }
+  }
+  /*tecla = miTeclado.getKey();
   if(tecla != NO_KEY)
   {
     clave[indice] = tecla;
@@ -71,5 +103,5 @@ void loop() {
       Serial.println(" Incorrecta");
     }
     indice = 0;
-  }
+  }*/
 }
