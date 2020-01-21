@@ -1,8 +1,8 @@
 // ----------------------------   Inclusión de librerías   --------------------------------------------------------------
 
 // Librerías para sensor de temperatura
-#include <DHT.h>
-#include <DHT_U.h>
+//#include <DHT.h>
+//#include <DHT_U.h>
 // Librería para teclado matricial
 #include <Keypad.h>
 // Librería para servomotor
@@ -49,7 +49,7 @@ usuario recuperacion;
 
 // ---------------------------------   Se define al sensor de temperatura DHT11   -------------------------------------
 #define DHTPIN 3
-DHT dht(DHTPIN,DHT11);
+//DHT dht(DHTPIN,DHT11);
 
 // -------------------------------------------------  Variables globales  -----------------------------------------------
 
@@ -129,7 +129,7 @@ void inicializacion(){
 
 void setup() {
   Serial.begin(9600);
-  dht.begin();  // Inicializar comunicación con el sensor DHT11
+//  dht.begin();  // Inicializar comunicación con el sensor DHT11
   miLCD.begin(16,2);  // Se inicializa el display LCD
   puerta.attach(5);
 
