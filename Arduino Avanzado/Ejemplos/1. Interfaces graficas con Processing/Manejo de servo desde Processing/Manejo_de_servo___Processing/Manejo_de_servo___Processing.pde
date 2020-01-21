@@ -65,6 +65,13 @@ void mouseClicked(){
   }
 }
 
+void mouseWheel(MouseEvent evento){
+  println(evento.getCount());  // Método que me dice si me estoy desplazando para arriba o hacia abajo
+  if(grados > 0 && grados < 180){
+    grados = grados - evento.getCount();
+  }
+}
+
 boolean sobreMenos(){
   if(mouseX >= 40 && mouseX <= 80 && mouseY >= 80 && mouseY <= 120){
     return true;
