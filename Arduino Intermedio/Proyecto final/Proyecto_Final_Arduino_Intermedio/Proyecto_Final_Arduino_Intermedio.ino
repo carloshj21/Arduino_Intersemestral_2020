@@ -93,9 +93,19 @@ void abrirPuerta(){
     if(claveCadena == contrasena_Usu1 || claveCadena == contrasena_Usu2){
       Serial.println(" Correcta");
       puerta.write(0);
+      miLCD.clear();
+      miLCD.setCursor(3,0);
+      miLCD.print("BIENVENIDO");
+      delay(2000);
     }
     else{
       Serial.println(" Incorrecta");
+      miLCD.clear();
+      miLCD.setCursor(3,0);
+      miLCD.print("Contrasena");
+      miLCD.setCursor(3,1);
+      miLCD.print("incorrecta");
+      delay(2000);
       puerta.write(90);
     }
   }
