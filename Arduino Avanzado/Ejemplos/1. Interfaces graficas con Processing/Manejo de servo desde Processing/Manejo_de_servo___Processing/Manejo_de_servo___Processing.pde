@@ -2,7 +2,7 @@ import processing.serial.*;
 
 Serial arduino;
 
-int grados = 180;
+int grados = 0;
 
 void setup(){
   size(300,150);
@@ -12,47 +12,70 @@ void setup(){
 void draw(){
   background(0,0,250);
   
+  // Título de la interfaz
   fill(239,173,49);
   noStroke();
   textSize(25);
   text("Posición del Servo:",40,50);
   
+  // Rectángulo donde se muestran los grados
   fill(255);
-  noStroke();
   rect(110,85,80,30);
   
+  // Botón de -
   fill(255,0,0);
-  noStroke();
   ellipse(60,100,40,40);
-  
   fill(255);
-  noStroke();
   textSize(40);
   text("-",48,112);
   
+  // Botón de +
   fill(0,255,0);
-  noStroke();
   ellipse(240,100,40,40);
-  
   fill(0);
-  noStroke();
   textSize(40);
   text("+",225,112);
   
-  fill(0);
-  noStroke();
+  // Texto que muestra los datos
   textSize(25);
   text(grados,130,110);
   
-  if(encimaBoton() && mousePressed){
-    fill(0);
+  arduino.write(grados);
+  // Prueba
+  
+  /*if(sobreMenos()){
+    fill(250,140,0);
     ellipse(60,100,40,40);
+    grados++;
+  }
+  
+  if(sobreMas() && mousePressed){
+    fill(0,255,140);
+    ellipse(240,100,40,40);
+    grados++;
+  }*/
+}
+
+void mouseClicked(){
+  if(sobreMenos() && grados > 0){
+    grados--;
+  }
+  if(sobreMas() && grados < 180){
+    grados++;
   }
 }
 
-boolean encimaBoton(){
-  if(mouseX >= 60 && mouseX <= 100 && mouseY >= 100 && mouseY <= 140){
-    println("Estás dentro");
+boolean sobreMenos(){
+  if(mouseX >= 40 && mouseX <= 80 && mouseY >= 80 && mouseY <= 120){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
+
+boolean sobreMas(){
+  if(mouseX >= 220 && mouseX <= 260 && mouseY >= 80 && mouseY <= 120){
     return true;
   }
   else{

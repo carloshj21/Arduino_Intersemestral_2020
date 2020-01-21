@@ -11,7 +11,6 @@ void setup() {
 
 void loop() {
   if(Serial.available() > 0){
-    
     grado = Serial.read();
     miServo.write(grado);
   }
