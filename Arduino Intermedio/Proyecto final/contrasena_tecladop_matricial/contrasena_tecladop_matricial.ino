@@ -27,8 +27,8 @@ char teclado [filas][columnas] ={
   {'*','0','#','D'}
 };
 
-byte pinesFilas[filas] = {11,10,9,8};
-byte pinesColumnas[columnas] = {7,6,5,4};
+byte pinesFilas[filas] = {13,12,11,10};
+byte pinesColumnas[columnas] = {9,8,7,6};
 
 Keypad miTeclado = Keypad(makeKeymap(teclado),pinesFilas,pinesColumnas,filas,columnas);
 
@@ -57,7 +57,8 @@ void loop() {
   {
     clave[indice] = tecla;
     indice++;
-    Serial.print(tecla);
+    //Serial.print(tecla);
+    Serial.print('*');
   }
 
   String claveIntro = String(clave);

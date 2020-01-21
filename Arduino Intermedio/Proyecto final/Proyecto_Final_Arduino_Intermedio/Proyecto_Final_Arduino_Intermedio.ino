@@ -51,26 +51,54 @@ usuario recuperacion;
 #define DHTPIN 3
 DHT dht(DHTPIN,DHT11);
 
+// -------------------------------------------------  Variables globales  -----------------------------------------------
+
 int i = 0;
 byte direccion = 0;
-byte contrasena;
-byte contr [3];
-String contra;
+char clave[4];
+byte indice = 0;
 
+byte contrasenas[2];
+
+byte contrasena_Usu1;
+byte contrasena_Usu2;
+
+int colLCD = 6;
+
+// -------------------------------------------------   Función para abrir la puerta   ------------------------------------
 void abrirPuerta(){
   miLCD.clear();
   miLCD.print("Introducir cont.");
-  for(i=0;i<3;i++){
-    tecla = miTeclado.getKey();
-    delay(500);
-    Serial.println(tecla);
-    contr[i] = tecla;
-  }
-  for(i=0;i<3;i++){
-    Serial.println(contr[i]);
-  }
-  puerta.write(0);
-  delay(5000);
+  /*tecla = miTeclado.getKey();
+  
+    while(tecla != 'E'  && tecla != NO_KEY){
+      clave[indice] = tecla;
+       indice++;
+       Serial.print(tecla);
+       miLCD.setCursor(colLCD,1);
+       miLCD.print('*');
+       colLCD++;
+    }
+    String claveIntro = String(clave);
+    int claveCadena = String(claveIntro).toInt();
+    if(indice == 3){
+      if(claveCadena == contrasena_Usu1 || claveCadena == contrasena_Usu2){
+        Serial.println(" Correcta");
+        puerta.write(0);
+        delay(2000);
+        miLCD.clear();
+        colLCD = 6;
+      }
+      else{
+        Serial.println(" Incorrecta");
+        puerta.write(45);
+        delay(2000);
+        miLCD.clear();
+        colLCD = 6;
+      }
+      indice = 0;
+   }*/
+   delay(5000);
 }
 
 void menuInicial(char opcion){
@@ -84,27 +112,11 @@ void menuInicial(char opcion){
 }
 
 void inicializacion(){
+  
   miLCD.setCursor(0,0);
   miLCD.print("A - Abrir puerta");
   miLCD.setCursor(0,1);
   miLCD.print("C - Cambiar cont");
-
-  float temperatura = dht.readTemperature();  // Leer datos de temperatura
-  if(isnan(temperatura)){
-    Serial.println("Error de lectura");
-  }else{
-    delay(5000);
-    miLCD.clear();
-    Serial.println("Temperatura");
-    miLCD.setCursor(0,0);
-    miLCD.print("Temperatura: ");
-    miLCD.setCursor(8,1);
-    miLCD.print(temperatura);
-    miLCD.setCursor(14,1);
-    miLCD.print("C");
-    delay(3000);
-  }
-  puerta.write(90);
   
   tecla = miTeclado.getKey();
   if(tecla != NO_KEY)
@@ -120,23 +132,20 @@ void setup() {
   dht.begin();  // Inicializar comunicación con el sensor DHT11
   miLCD.begin(16,2);  // Se inicializa el display LCD
   puerta.attach(5);
-  
+
+  for(i=0;i<2;i++){
+    EEPROM.get(direccion,recuperacion);
+    contrasenas[i] = recuperacion.contrasena;
+    direccion = direccion + sizeof(recuperacion);
+  }
+
+  contrasena_Usu1 = contrasenas[0];
+  contrasena_Usu2 = contrasenas[1];
+
+  Serial.println(contrasena_Usu1);
+  Serial.println(contrasena_Usu2);
 }
 
 void loop() {
-  inicializacion();
-  
-  /*if(tecla != NO_KEY)
-  {
-    Serial.println(tecla);
-    if(tecla == 'A'){
-      miLCD.clear();
-      miLCD.print("Introducir cont.");
-      contrasena = miTeclado.getKey();
-      if(contrasena != NO_KEY){
-        Serial.println(contrasena);
-      }
-      delay(5000);
-    }
-  }*/
+  //inicializacion();
 }
