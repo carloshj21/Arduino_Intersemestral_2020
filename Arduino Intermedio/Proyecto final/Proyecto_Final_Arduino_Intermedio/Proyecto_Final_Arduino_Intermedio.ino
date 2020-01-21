@@ -141,9 +141,6 @@ void setup() {
 
   contrasena_Usu1 = contrasenas[0];
   contrasena_Usu2 = contrasenas[1];
-
-  Serial.println(contrasena_Usu1);
-  Serial.println(contrasena_Usu2);
 }
 
 void loop() {
