@@ -64,6 +64,24 @@ byte contrasena_Usu1;
 byte contrasena_Usu2;
 
 // -------------------------------------------------   Función para abrir la puerta   ------------------------------------
+void cerrarPuerta(){
+  miLCD.clear();
+  miLCD.setCursor(4,0);
+  miLCD.print("Abierto");
+  miLCD.setCursor(0,1);
+  miLCD.print("B - Cerrar puerta");
+  while(tecla != 'B'){
+    tecla = miTeclado.getKey();
+  }
+  if(tecla == 'B'){
+    miLCD.clear();
+    miLCD.setCursor(1,0);
+    miLCD.print("Puerta cerrada");
+    puerta.write(90);
+    delay(2000);
+  }
+}
+
 void abrirPuerta(){
   int colLCD = 6;
   Serial.print("colLCD: ");
@@ -85,7 +103,6 @@ void abrirPuerta(){
       miLCD.setCursor(colLCD,1);
       miLCD.print("*");
     }
-    //Serial.println("No enter");
   }
   if(tecla == 'E'){
     String claveIntro = String(clave);
@@ -97,6 +114,7 @@ void abrirPuerta(){
       miLCD.setCursor(3,0);
       miLCD.print("BIENVENIDO");
       delay(2000);
+      cerrarPuerta();
     }
     else{
       Serial.println(" Incorrecta");
