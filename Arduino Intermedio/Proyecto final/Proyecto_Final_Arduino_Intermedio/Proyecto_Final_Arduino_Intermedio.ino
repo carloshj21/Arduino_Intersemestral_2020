@@ -14,6 +14,7 @@
 
 // -----------------------   Definición y configuración del teclado matricial   -----------------------------------------
 char tecla;
+char dato;
 
 const byte filas = 4;
 const byte columnas = 4;
@@ -64,6 +65,87 @@ byte contrasena_Usu1;
 byte contrasena_Usu2;
 
 // -------------------------------------------------   Función para abrir la puerta   ------------------------------------
+void modificarCont(byte direccion){
+  Serial.println("Modificar contraseña");
+  int colLCD = 6;
+  miLCD.clear();
+  miLCD.print("Nueva contrasena");
+  Serial.println("Nueva contraseña: ");
+  while(dato != 'E'){
+    dato = miTeclado.getKey();
+    if(dato != NO_KEY)
+    {
+      colLCD = colLCD + 1;
+      clave[indice] = dato;
+      indice++;
+      Serial.print("Tecla: ");
+      Serial.println(dato);
+      Serial.println('*');
+      Serial.print("colLCD: ");
+      Serial.println(colLCD);
+      miLCD.setCursor(colLCD,1);
+      miLCD.print("*");
+    }
+  }
+  if(dato == 'E'){
+    String claveIntro = String(clave);
+    byte claveCadena = String(claveIntro).toInt();
+    Serial.print("Clave cadena: ");
+    Serial.println(claveCadena);
+    //EEPROM.update(direccion,claveCadena);
+    //Serial.println("Contraseña modificada");
+  }
+}
+
+void cambiarContrasena(){
+  Serial.println("Cambiar Contraseña");
+  int colLCD = 6;
+  Serial.print("colLCD: ");
+  Serial.println(colLCD);
+  miLCD.clear();
+  miLCD.print("Introducir cont.");
+  Serial.println("Introduzca su contraseña: ");
+  while(tecla != 'E'){
+    tecla = miTeclado.getKey();
+    if(tecla != NO_KEY)
+    {
+      colLCD = colLCD + 1;
+      clave[indice] = tecla;
+      indice++;
+      Serial.print(tecla);
+      Serial.print('*');
+      Serial.print("colLCD: ");
+      Serial.println(colLCD);
+      miLCD.setCursor(colLCD,1);
+      miLCD.print("*");
+    }
+  }
+  if(tecla == 'E'){
+    String claveIntro = String(clave);
+    int claveCadena = String(claveIntro).toInt();
+    if(claveCadena == contrasena_Usu1){
+      Serial.println("Coincide con usuario 1");
+      direccion = 0;
+      modificarCont(direccion);
+    }
+    if(claveCadena == contrasena_Usu2){
+      Serial.println("Coincide con usuario 2");
+      direccion = 1;
+      modificarCont(direccion);
+    }
+    else{
+      Serial.println(" Incorrecta");
+      miLCD.clear();
+      miLCD.setCursor(3,0);
+      miLCD.print("Contrasena");
+      miLCD.setCursor(3,1);
+      miLCD.print("incorrecta");
+      delay(2000);
+      puerta.write(90);
+    }
+  }
+}
+
 void cerrarPuerta(){
   miLCD.clear();
   miLCD.setCursor(4,0);
@@ -135,6 +217,7 @@ void menuInicial(char opcion){
       abrirPuerta();
     break;
     case 'C':
+      cambiarContrasena();
     break;
   }
 }
@@ -168,7 +251,9 @@ void setup() {
   }
 
   contrasena_Usu1 = contrasenas[0];
+  Serial.println(contrasena_Usu1);
   contrasena_Usu2 = contrasenas[1];
+  Serial.println(contrasena_Usu2);
 }
 
 void loop() {
