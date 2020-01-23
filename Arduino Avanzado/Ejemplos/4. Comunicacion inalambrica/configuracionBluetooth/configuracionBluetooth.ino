@@ -9,6 +9,8 @@ SoftwareSerial blue = SoftwareSerial(Rx,Tx);
 void setup() {
   Serial.begin(9600);
   blue.begin(38400);  // Para el modo configuración
+
+  // ADDR:  98d3,51,fd7498
 }
 
 void loop() {
