@@ -65,62 +65,45 @@ byte contrasenas[2];
 byte contrasena_Usu1;
 byte contrasena_Usu2;
 
+byte cambio = 0;
+
 // -------------------------------------------------   Función para abrir la puerta   ------------------------------------
 void modificarCont(byte direccion){
-  Serial.print("Contraseña Usuario 1: ");
-  Serial.println(contrasena_Usu1);
-  Serial.println("Modificar contraseña");
   int colLCD = 6;
   miLCD.clear();
   miLCD.print("Nueva contrasena");
-  Serial.println("Nueva contraseña: ");
   tecla = 'S';
   indice = 0;
-  Serial.println(tecla);
   while(tecla != 'E'){
     tecla = miTeclado.getKey();
     if(tecla != NO_KEY){
-      Serial.println(tecla); 
-      Serial.println("Nueva");
       colLCD = colLCD + 1;
       claveNueva[indice] = tecla;
       indice++;
-      Serial.print("Tecla: ");
-      Serial.println(tecla);
-      Serial.println('*');
-      //Serial.print("colLCD: ");
-      //Serial.println(colLCD);
       miLCD.setCursor(colLCD,1);
       miLCD.print("*");
     }
   }
   if(tecla == 'E'){
-    Serial.print("Contraseña Usuario 1: ");
-    Serial.println(contrasena_Usu1);
-    for(i=0;i<3;i++){
-      Serial.println(claveNueva[i]);
-    }
     String claveIntro = String(claveNueva);
     byte claveCadena = String(claveIntro).toInt();
-    Serial.print("Clave cadena: ");
-    Serial.println(claveCadena);
     EEPROM.update(direccion,claveCadena);
-    Serial.println("Contraseña modificada");
     miLCD.clear();
     miLCD.setCursor(3,0);
     miLCD.print("Contrasena");
     miLCD.setCursor(3,1);
     miLCD.print("modificada");
+    cambio = 1;
 
     for(i=0;i<2;i++){
       EEPROM.get(direccion,recuperacion);
       contrasenas[i] = recuperacion.contrasena;
       direccion = direccion + sizeof(recuperacion);
     }
-  
+
     contrasena_Usu1 = contrasenas[0];
-    Serial.println(contrasena_Usu1);
     contrasena_Usu2 = contrasenas[1];
+    Serial.println(contrasena_Usu1);
     Serial.println(contrasena_Usu2);
   
     delay(2000);
@@ -128,16 +111,10 @@ void modificarCont(byte direccion){
 }
 
 void cambiarContrasena(){
-  Serial.print("Contraseña Usuario 1: ");
-  Serial.println(contrasena_Usu1);
-  Serial.println("Cambiar Contraseña");
   int colLCD = 6;
   indice = 0;
-  //Serial.print("colLCD: ");
-  //Serial.println(colLCD);
   miLCD.clear();
   miLCD.print("Introducir cont.");
-  Serial.println("Introduzca su contraseña: ");
   while(tecla != 'E'){
     tecla = miTeclado.getKey();
     if(tecla != NO_KEY)
@@ -145,33 +122,22 @@ void cambiarContrasena(){
       colLCD = colLCD + 1;
       clave[indice] = tecla;
       indice++;
-      Serial.print(tecla);
-      Serial.print('*');
-      //Serial.print("colLCD: ");
-      //Serial.println(colLCD);
       miLCD.setCursor(colLCD,1);
       miLCD.print("*");
     }
   }
-  if(tecla == 'E'){
-    Serial.print("Contraseña Usuario 1: ");
-    Serial.println(contrasena_Usu1);
+  if(tecla == 'E'){ 
     String claveIntro = String(clave);
     byte claveCadena = String(claveIntro).toInt();
     if(claveCadena == contrasena_Usu1){
-      Serial.println("Coincide con usuario 1");
       direccion = 0;
       modificarCont(direccion);
     }
     if(claveCadena == contrasena_Usu2){
-      Serial.println("Coincide con usuario 2");
       direccion = 1;
       modificarCont(direccion);
     }
-    if(claveCadena != contrasena_Usu1 && claveCadena != contrasena_Usu2){
-      Serial.print("Contraseña Usuario 1: ");
-      Serial.println(contrasena_Usu1);
-      Serial.println(" Incorrecta");
+    if(claveCadena != contrasena_Usu1 && claveCadena != contrasena_Usu2 && cambio == 0){
       miLCD.clear();
       miLCD.setCursor(3,0);
       miLCD.print("Contrasena");
@@ -199,20 +165,13 @@ void cerrarPuerta(){
     puerta.write(90);
     delay(2000);
   }
-  Serial.print("Contraseña Usuario 1: ");
-  Serial.println(contrasena_Usu1);
 }
 
 void abrirPuerta(){
-  Serial.print("Contraseña Usuario 1: ");
-  Serial.println(contrasena_Usu1);
   int colLCD = 6;
   indice = 0;
-  //Serial.print("colLCD: ");
-  //Serial.println(colLCD);
   miLCD.clear();
   miLCD.print("Introducir cont.");
-  Serial.println("Introduzca su contraseña: ");
   while(tecla != 'E'){
     tecla = miTeclado.getKey();
     if(tecla != NO_KEY)
@@ -220,23 +179,14 @@ void abrirPuerta(){
       colLCD = colLCD + 1;
       clave[indice] = tecla;
       indice++;
-      Serial.print(tecla);
-      Serial.print('*');
-      //Serial.print("colLCD: ");
-      //Serial.println(colLCD);
       miLCD.setCursor(colLCD,1);
       miLCD.print("*");
-      Serial.print("Contraseña Usuario 1: ");
-      Serial.println(contrasena_Usu1);
     }
   }
   if(tecla == 'E'){
-    Serial.print("Contraseña Usuario 1: ");
-    Serial.println(contrasena_Usu1);
     String claveIntro = String(clave);
     byte claveCadena = String(claveIntro).toInt();
     if(claveCadena == contrasena_Usu1 || claveCadena == contrasena_Usu2){
-      Serial.println(" Correcta");
       puerta.write(0);
       miLCD.clear();
       miLCD.setCursor(3,0);
@@ -245,9 +195,6 @@ void abrirPuerta(){
       cerrarPuerta();
     }
     else{
-      Serial.print("Contraseña Usuario 1: ");
-      Serial.println(contrasena_Usu1);
-      Serial.println(" Incorrecta");
       miLCD.clear();
       miLCD.setCursor(3,0);
       miLCD.print("Contrasena");
@@ -260,10 +207,7 @@ void abrirPuerta(){
 }
 
 void menuInicial(char opcion){
-  contrasena_Usu1 = contrasenas[0];
-  Serial.println(contrasena_Usu1);
   contrasena_Usu2 = contrasenas[1];
-  Serial.println(contrasena_Usu2);
   switch(opcion){
     case 'A':
       abrirPuerta();
@@ -275,7 +219,7 @@ void menuInicial(char opcion){
 }
 
 void inicializacion(){
-  
+  cambio = 0;
   miLCD.setCursor(0,0);
   miLCD.print("A - Abrir puerta");
   miLCD.setCursor(0,1);
@@ -303,8 +247,8 @@ void setup() {
   }
 
   contrasena_Usu1 = contrasenas[0];
-  Serial.println(contrasena_Usu1);
   contrasena_Usu2 = contrasenas[1];
+  Serial.println(contrasena_Usu1);
   Serial.println(contrasena_Usu2);
 }
 
