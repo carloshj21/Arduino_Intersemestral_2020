@@ -57,6 +57,7 @@ usuario recuperacion;
 int i = 0;
 byte direccion = 0;
 char clave[4];
+char claveNueva[4];
 byte indice = 0;
 
 byte contrasenas[2];
@@ -71,15 +72,19 @@ void modificarCont(byte direccion){
   miLCD.clear();
   miLCD.print("Nueva contrasena");
   Serial.println("Nueva contraseña: ");
-  while(dato != 'E'){
-    dato = miTeclado.getKey();
-    if(dato != NO_KEY)
-    {
+  tecla = 'S';
+  indice = 0;
+  Serial.println(tecla);
+  while(tecla != 'E'){
+    tecla = miTeclado.getKey();
+    if(tecla != NO_KEY){
+      Serial.println(tecla); 
+      Serial.println("Nueva");
       colLCD = colLCD + 1;
-      clave[indice] = dato;
+      claveNueva[indice] = tecla;
       indice++;
       Serial.print("Tecla: ");
-      Serial.println(dato);
+      Serial.println(tecla);
       Serial.println('*');
       Serial.print("colLCD: ");
       Serial.println(colLCD);
@@ -87,13 +92,22 @@ void modificarCont(byte direccion){
       miLCD.print("*");
     }
   }
-  if(dato == 'E'){
-    String claveIntro = String(clave);
+  if(tecla == 'E'){
+    for(i=0;i<3;i++){
+      Serial.println(claveNueva[i]);
+    }
+    String claveIntro = String(claveNueva);
     byte claveCadena = String(claveIntro).toInt();
     Serial.print("Clave cadena: ");
     Serial.println(claveCadena);
-    //EEPROM.update(direccion,claveCadena);
-    //Serial.println("Contraseña modificada");
+    EEPROM.update(direccion,claveCadena);
+    Serial.println("Contraseña modificada");
+    miLCD.clear();
+    miLCD.setCursor(3,0);
+    miLCD.print("Contrasena");
+    miLCD.setCursor(3,1);
+    miLCD.print("modificada");
+    delay(2000);
   }
 }
 
@@ -133,7 +147,7 @@ void cambiarContrasena(){
       direccion = 1;
       modificarCont(direccion);
     }
-    else{
+    if(claveCadena != contrasena_Usu1 && claveCadena != contrasena_Usu2){
       Serial.println(" Incorrecta");
       miLCD.clear();
       miLCD.setCursor(3,0);

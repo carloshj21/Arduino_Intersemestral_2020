@@ -77,6 +77,19 @@ void loop() {
         int claveCadena = String(claveIntro).toInt();
         if(claveCadena == contrasena_Usu1 || claveCadena == contrasena_Usu2){
           Serial.println(" Correcta");
+          Serial.println("Introduzca la nueva contraseña: ");
+          tecla = 'S';
+          Serial.println(tecla);
+          while(tecla != 'E'){
+            tecla = miTeclado.getKey();
+            if(tecla != NO_KEY){
+              Serial.println(tecla); 
+              Serial.println("Nueva");
+            }
+          }
+          if(tecla == 'E'){
+            Serial.println("Contraseña modificada");
+          }
         }
         else{
           Serial.println(" Incorrecta");
