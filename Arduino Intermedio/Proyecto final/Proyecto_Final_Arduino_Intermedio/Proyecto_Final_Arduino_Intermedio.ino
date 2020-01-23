@@ -1,8 +1,9 @@
+
 // ----------------------------   Inclusión de librerías   --------------------------------------------------------------
 
 // Librerías para sensor de temperatura
-//#include <DHT.h>
-//#include <DHT_U.h>
+#include <DHT.h>
+#include <DHT_U.h>
 // Librería para teclado matricial
 #include <Keypad.h>
 // Librería para servomotor
@@ -11,6 +12,8 @@
 #include <LiquidCrystal.h>
 // Librería para memoria EEPROM
 #include <EEPROM.h>
+// Librería para interrupción
+#include <TimerOne.h>
 
 // -----------------------   Definición y configuración del teclado matricial   -----------------------------------------
 char tecla;
@@ -50,7 +53,7 @@ usuario recuperacion;
 
 // ---------------------------------   Se define al sensor de temperatura DHT11   -------------------------------------
 #define DHTPIN 3
-//DHT dht(DHTPIN,DHT11);
+DHT dht(DHTPIN,DHT11);
 
 // -------------------------------------------------  Variables globales  -----------------------------------------------
 
@@ -220,10 +223,26 @@ void menuInicial(char opcion){
 
 void inicializacion(){
   cambio = 0;
+  
   miLCD.setCursor(0,0);
   miLCD.print("A - Abrir puerta");
   miLCD.setCursor(0,1);
   miLCD.print("C - Cambiar cont");
+  /*delay(2000);
+  float temperatura = dht.readTemperature();  // Leer datos de temperatura
+  if(isnan(temperatura)){
+    Serial.println("Error de lectura");
+  }else{
+    miLCD.clear();
+    Serial.println("Temperatura");
+    miLCD.setCursor(0,0);
+    miLCD.print("Temperatura: ");
+    miLCD.setCursor(8,1);
+    miLCD.print(temperatura);
+    miLCD.setCursor(14,1);
+    miLCD.print("C");
+    delay(1000);
+  }*/
   
   tecla = miTeclado.getKey();
   if(tecla != NO_KEY)
@@ -232,11 +251,9 @@ void inicializacion(){
   }
 }
 
-
-
 void setup() {
   Serial.begin(9600);
-//  dht.begin();  // Inicializar comunicación con el sensor DHT11
+  dht.begin();  // Inicializar comunicación con el sensor DHT11
   miLCD.begin(16,2);  // Se inicializa el display LCD
   puerta.attach(5);
 
@@ -254,4 +271,5 @@ void setup() {
 
 void loop() {
   inicializacion();
+  
 }
