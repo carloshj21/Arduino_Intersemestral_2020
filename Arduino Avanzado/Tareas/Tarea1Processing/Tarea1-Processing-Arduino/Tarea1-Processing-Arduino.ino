@@ -1,26 +1,30 @@
+/*
+    Realizado por: Hernández Juárez Carlos
+    Tarea 1: Processing
+    Arduino Avanzado
+*/
+
 int entrada1 = 7;
 int entrada2 = 6;
 int enable = 9;
 
-char dato;
+int dato;
 
-void estadoMotor(char estado){
+void estadoMotor(int estado){
   switch(estado){
-    case 'p':
+    case 1:
       digitalWrite(enable,HIGH);
-      Serial.println("Prendido");
     break;
-    case 'a':
+    case 2:
       digitalWrite(enable,LOW);
-      Serial.println("Apagado");
+      digitalWrite(entrada1,LOW);
+      digitalWrite(entrada2,LOW);
     break;
-    case 'i':
-      Serial.println("Girando izquierda");
+    case 3:
       digitalWrite(entrada1,LOW);
       digitalWrite(entrada2,HIGH);
     break;
-    case 'd':
-      Serial.println("Girando derecha");
+    case 4:
       digitalWrite(entrada1,HIGH);
       digitalWrite(entrada2,LOW);
     break;
