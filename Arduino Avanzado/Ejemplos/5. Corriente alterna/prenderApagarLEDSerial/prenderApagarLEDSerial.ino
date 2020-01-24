@@ -11,10 +11,10 @@ void loop() {
     estado = Serial.read();
 
     if(estado == 'y' || estado == 'Y'){
-      digitalWrite(led,HIGH);
+      digitalWrite(led,LOW);
     }
     else if(estado == 'n' || estado == 'N'){
-      digitalWrite(led,LOW);
+      digitalWrite(led,HIGH);
     }
   }
 }
