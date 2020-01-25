@@ -1,3 +1,9 @@
+/*
+    Realizado por: Hernández Juárez Carlos
+    Proyecto final Arduino Intermedio
+    Prototipo de Puerta Inteligente
+*/
+
 #include <EEPROM.h>
 
 // Se define la estructura
