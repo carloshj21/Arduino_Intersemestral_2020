@@ -55,6 +55,9 @@ usuario recuperacion;
 #define DHTPIN 3
 DHT dht(DHTPIN,DHT11);
 
+// ---------------------------------------   Se declara pin para buzzer   ------------------------------------------------
+int buzzer = 4;
+
 // -------------------------------------------------  Variables globales  -----------------------------------------------
 
 int i = 0;
@@ -91,6 +94,9 @@ void modificarCont(byte direccion){
     String claveIntro = String(claveNueva);
     byte claveCadena = String(claveIntro).toInt();
     EEPROM.update(direccion,claveCadena);
+    digitalWrite(buzzer,HIGH);
+    delay(500);
+    digitalWrite(buzzer,LOW);
     miLCD.clear();
     miLCD.setCursor(3,0);
     miLCD.print("Contrasena");
@@ -141,6 +147,13 @@ void cambiarContrasena(){
       modificarCont(direccion);
     }
     if(claveCadena != contrasena_Usu1 && claveCadena != contrasena_Usu2 && cambio == 0){
+      digitalWrite(buzzer,HIGH);
+      delay(200);
+      digitalWrite(buzzer,LOW);
+      delay(100);
+      digitalWrite(buzzer,HIGH);
+      delay(200);
+      digitalWrite(buzzer,LOW);
       miLCD.clear();
       miLCD.setCursor(3,0);
       miLCD.print("Contrasena");
@@ -162,6 +175,9 @@ void cerrarPuerta(){
     tecla = miTeclado.getKey();
   }
   if(tecla == 'B'){
+    digitalWrite(buzzer,HIGH);
+    delay(500);
+    digitalWrite(buzzer,LOW);
     miLCD.clear();
     miLCD.setCursor(1,0);
     miLCD.print("Puerta cerrada");
@@ -190,6 +206,9 @@ void abrirPuerta(){
     String claveIntro = String(clave);
     byte claveCadena = String(claveIntro).toInt();
     if(claveCadena == contrasena_Usu1 || claveCadena == contrasena_Usu2){
+      digitalWrite(buzzer,HIGH);
+      delay(1000);
+      digitalWrite(buzzer,LOW);
       puerta.write(0);
       miLCD.clear();
       miLCD.setCursor(3,0);
@@ -198,6 +217,13 @@ void abrirPuerta(){
       cerrarPuerta();
     }
     else{
+      digitalWrite(buzzer,HIGH);
+      delay(200);
+      digitalWrite(buzzer,LOW);
+      delay(100);
+      digitalWrite(buzzer,HIGH);
+      delay(200);
+      digitalWrite(buzzer,LOW);
       miLCD.clear();
       miLCD.setCursor(3,0);
       miLCD.print("Contrasena");
@@ -256,6 +282,7 @@ void setup() {
   dht.begin();  // Inicializar comunicación con el sensor DHT11
   miLCD.begin(16,2);  // Se inicializa el display LCD
   puerta.attach(5);
+  pinMode(buzzer,OUTPUT);
 
   for(i=0;i<2;i++){
     EEPROM.get(direccion,recuperacion);
@@ -271,5 +298,4 @@ void setup() {
 
 void loop() {
   inicializacion();
-  
 }
