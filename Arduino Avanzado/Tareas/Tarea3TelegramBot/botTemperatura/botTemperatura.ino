@@ -6,6 +6,7 @@
 DHT dht(DHTPIN,DHT11); 
 
 byte temp;
+float temperatura;
 
 void setup() {
   Serial.begin(9600);
@@ -13,8 +14,9 @@ void setup() {
 }
 
 void loop() {
-    delay(5000);
-    float temperatura = dht.readTemperature();
+  
+    delay(2000);
+    temperatura = dht.readTemperature();
   
     if(isnan(temperatura)){
       Serial.write("Error de lectura");
