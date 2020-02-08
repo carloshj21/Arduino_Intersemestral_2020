@@ -12,10 +12,10 @@ def handle(msg):
 		print ('Comando ingresado: %s' % command)
 
 		if '/temperatura' in command:
-			valor = ser.read(5)
-			bot.sendMessage(chat_id, "Temperatura:  ")
-			bot.sendMessage(chat_id, valor)
-			bot.sendMessage(chat_id, " °C")
+			valor = ser.read(7).decode("utf-8")
+			bot.sendMessage(chat_id, "Temperatura:  "+ valor + " °C")
+			#bot.sendMessage(chat_id, valor)
+			#bot.sendMessage(chat_id, " °C")
 
 # Create a bot using the token given by BotFather
 bot = telepot.Bot('1014077216:AAGRmH8FkSQsDbtCwAkR_ZAs10lcrxeghpY')

@@ -15,7 +15,7 @@ void setup() {
 
 void loop() {
   
-    /*delay(2000);
+    delay(2000);
     temperatura = dht.readTemperature();
   
     if(isnan(temperatura)){
@@ -23,7 +23,6 @@ void loop() {
     }else{
       temp = byte(temperatura);
       Serial.println(temperatura);
-      Serial.println(temp);
-    }*/
-    Serial.println(445.45);
+    }
+    //Serial.println(445.45);
 }
