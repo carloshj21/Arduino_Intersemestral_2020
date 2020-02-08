@@ -12,10 +12,9 @@ def handle(msg):
 		print ('Comando ingresado: %s' % command)
 
 		if '/temperatura' in command:
+			valor = ser.read(5)
 			bot.sendMessage(chat_id, "Temperatura:  ")
-			for i in range(0,5):
-				opcion = ser.read().decode("utf-8")
-				bot.sendMessage(chat_id, opcion)
+			bot.sendMessage(chat_id, valor)
 			bot.sendMessage(chat_id, " °C")
 
 # Create a bot using the token given by BotFather
